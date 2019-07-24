@@ -30,3 +30,20 @@ func OnlyContainsLegalRunes(s string) (result bool) { // ^[0-9A-Z]
 	result = onlyContainsLegalRunesRegex.MatchString(s)
 	return
 }
+
+func Validate(s string) []string {
+	result := make([]string, 0)
+	if !IsLongEnough(s) {
+		result = append(result, "Is not long enough")
+	}
+	if !IsShortEnough(s) {
+		result = append(result, "Is not short enough")
+	}
+	if ContainsNoIllegalPattern(s) {
+		result = append(result, "ContainsNoIllegalPattern")
+	}
+	if !OnlyContainsLegalRunes(s) {
+		result = append(result, "Not OnlyContainsLegalRunes")
+	}
+	return result
+}
