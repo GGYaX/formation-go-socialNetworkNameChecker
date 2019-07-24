@@ -16,7 +16,7 @@ func main() {
 	containsLegalRunesInput := "^&*"
 	containsLegalRunes := twitter.OnlyContainsLegalRunes(containsLegalRunesInput)
 
-	fmt.Printf("result containsNoIllegalPatternResult of input %s is %v\n", containsNoIllegalPatternInput, containsNoIllegalPatternResult)
+	fmt.Println("result containsNoIllegalPatternResult of input %s is %v\n", containsNoIllegalPatternInput, containsNoIllegalPatternResult)
 	fmt.Printf("result shortEnough of input %s is %v\n", shortEnoughInput, shortEnough)
 	fmt.Printf("result longEnough of input %s is %v\n", longEnoughInput, longEnough)
 	fmt.Printf("result containsLegalRunes of input %s is %v\n", containsLegalRunesInput, containsLegalRunes)
