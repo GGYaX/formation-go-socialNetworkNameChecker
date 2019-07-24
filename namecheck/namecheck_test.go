@@ -7,8 +7,7 @@ import (
 	"testing"
 )
 
-var validater namecheck.Validater = &twitter.Twitter{}
-var isAvailable namecheck.IsAvailabler = &twitter.Twitter{}
+var socialNetworkChecker namecheck.SocialNetworkChecker = &twitter.Twitter{}
 
 func TestValidate(t *testing.T) {
 	tests := []struct {
@@ -23,8 +22,8 @@ func TestValidate(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			validater.Validate(test.in)
-			assert.Equal(t, test.out, validater.Validate(test.in))
+			socialNetworkChecker.Validate(test.in)
+			assert.Equal(t, test.out, socialNetworkChecker.Validate(test.in))
 		})
 	}
 }
@@ -34,10 +33,10 @@ func TestSocialNetworks(t *testing.T) {
 }
 
 func TestCheckTwitterName(t *testing.T) {
-	existed, err := isAvailable.IsAvailable("abc")
+	existed, err := socialNetworkChecker.IsAvailable("abc")
 	assert.Equal(t, true, existed)
 	assert.Zero(t, err)
-	existed, err = isAvailable.IsAvailable("kcvaekjhrkq")
+	existed, err = socialNetworkChecker.IsAvailable("kcvaekjhrkq")
 	assert.Equal(t, false, existed)
 	assert.Zero(t, err)
 }

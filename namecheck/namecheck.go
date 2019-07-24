@@ -8,6 +8,11 @@ type IsAvailabler interface {
 	IsAvailable(s string) (bool, IsAvailablerError)
 }
 
+type SocialNetworkChecker interface {
+	Validater
+	IsAvailabler
+}
+
 //func SocialNetworks() []Validater {
 //	return []Validater{&twitter.Twitter{}}
 //}
