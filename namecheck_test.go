@@ -26,3 +26,7 @@ func TestValidate(t *testing.T) {
 		})
 	}
 }
+
+func TestSocialNetworks(t *testing.T) {
+	assert.Equal(t, &twitter.Twitter{}, SocialNetworks())
+}
