@@ -19,6 +19,8 @@ const (
 
 type Celsius int
 
+//var p = Person{name:"asdf"}
+
 func main() {
 	var (
 		hello     = "aasaaaa"
