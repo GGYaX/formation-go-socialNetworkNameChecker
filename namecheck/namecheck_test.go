@@ -1,12 +1,14 @@
-package namecheck
+package namecheck_test
 
 import (
-	"github.com/GGYaX/namecheck/twitter-with-method"
+	"github.com/GGYaX/namecheck/namecheck"
+	"github.com/GGYaX/namecheck/twitter"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-var validater Validater = &twitter.Twitter{}
+var validater namecheck.Validater = &twitter.Twitter{}
+var isAvailable namecheck.IsAvailabler = &twitter.Twitter{}
 
 func TestValidate(t *testing.T) {
 	tests := []struct {
@@ -28,5 +30,14 @@ func TestValidate(t *testing.T) {
 }
 
 func TestSocialNetworks(t *testing.T) {
-	assert.Equal(t, &twitter.Twitter{}, SocialNetworks())
+	//assert.Equal(t, &twitter.Twitter{}, SocialNetworks())
+}
+
+func TestCheckTwitterName(t *testing.T) {
+	existed, err := isAvailable.IsAvailable("abc")
+	assert.Equal(t, true, existed)
+	assert.Zero(t, err)
+	existed, err = isAvailable.IsAvailable("kcvaekjhrkq")
+	assert.Equal(t, false, existed)
+	assert.Zero(t, err)
 }

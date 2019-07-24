@@ -1,11 +1,13 @@
 package twitter_test
 
 import (
-	"github.com/GGYaX/namecheck/twitter"
+	twitter2 "github.com/GGYaX/namecheck/twitter"
 	"github.com/stretchr/testify/assert"
 	_ "os"
 	"testing"
 )
+
+var twitter *twitter2.Twitter
 
 func TestIsShortEnough(t *testing.T) {
 	assert.Equal(t, true, twitter.IsShortEnough("qqqqqqqqqqqqqqq"))

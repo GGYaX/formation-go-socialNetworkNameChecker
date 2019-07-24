@@ -1,41 +1,39 @@
-package twitter_test
+package twitter_old_test
 
 import (
-	twitter2 "github.com/GGYaX/namecheck/twitter-with-method"
+	"github.com/GGYaX/namecheck/twitter-old"
 	"github.com/stretchr/testify/assert"
 	_ "os"
 	"testing"
 )
 
-var twitter *twitter2.Twitter
-
 func TestIsShortEnough(t *testing.T) {
-	assert.Equal(t, true, twitter.IsShortEnough("qqqqqqqqqqqqqqq"))
-	assert.Equal(t, false, twitter.IsShortEnough("qqqqqqqqqqqqqqqq"))
-	assert.Equal(t, true, twitter.IsShortEnough("我我我我我我我我我我我我我😊我"))
-	assert.Equal(t, false, twitter.IsShortEnough("我我我我我我我我我我我我我😊我我"))
+	assert.Equal(t, true, twitter_old.IsShortEnough("qqqqqqqqqqqqqqq"))
+	assert.Equal(t, false, twitter_old.IsShortEnough("qqqqqqqqqqqqqqqq"))
+	assert.Equal(t, true, twitter_old.IsShortEnough("我我我我我我我我我我我我我😊我"))
+	assert.Equal(t, false, twitter_old.IsShortEnough("我我我我我我我我我我我我我😊我我"))
 }
 
 func TestContainsNoIllegalPattern(t *testing.T) {
-	assert.Equal(t, true, twitter.ContainsNoIllegalPattern("twitter"))
-	assert.Equal(t, true, twitter.ContainsNoIllegalPattern("atwitterb"))
-	assert.Equal(t, false, twitter.ContainsNoIllegalPattern("asdfadsf"))
+	assert.Equal(t, true, twitter_old.ContainsNoIllegalPattern("twitter"))
+	assert.Equal(t, true, twitter_old.ContainsNoIllegalPattern("atwitterb"))
+	assert.Equal(t, false, twitter_old.ContainsNoIllegalPattern("asdfadsf"))
 }
 
 func TestOnlyContainsLegalRunes(t *testing.T) {
-	assert.Equal(t, true, twitter.OnlyContainsLegalRunes("qqqqqqqqqqqqqqq"))
-	assert.Equal(t, true, twitter.OnlyContainsLegalRunes("qqqqqqqqqqqqqqqq"))
-	assert.Equal(t, false, twitter.OnlyContainsLegalRunes("我我我我我我我我我我我我我😊我"))
+	assert.Equal(t, true, twitter_old.OnlyContainsLegalRunes("qqqqqqqqqqqqqqq"))
+	assert.Equal(t, true, twitter_old.OnlyContainsLegalRunes("qqqqqqqqqqqqqqqq"))
+	assert.Equal(t, false, twitter_old.OnlyContainsLegalRunes("我我我我我我我我我我我我我😊我"))
 }
 
 func TestIsLongEnough(t *testing.T) {
-	assert.Equal(t, true, twitter.IsLongEnough("q"))
-	assert.Equal(t, false, twitter.IsLongEnough(""))
+	assert.Equal(t, true, twitter_old.IsLongEnough("q"))
+	assert.Equal(t, false, twitter_old.IsLongEnough(""))
 }
 
 func BenchmarkIsLongEnough(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		twitter.IsLongEnough("asdf")
+		twitter_old.IsLongEnough("asdf")
 	}
 }
 
@@ -51,7 +49,7 @@ func TestTableIsShortEnough(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			assert.Equal(t, test.out, twitter.IsShortEnough(test.in))
+			assert.Equal(t, test.out, twitter_old.IsShortEnough(test.in))
 		})
 	}
 }
@@ -67,7 +65,7 @@ func TestTableContainsNoIllegalPattern(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			assert.Equal(t, test.out, twitter.ContainsNoIllegalPattern(test.in))
+			assert.Equal(t, test.out, twitter_old.ContainsNoIllegalPattern(test.in))
 		})
 	}
 }
@@ -83,7 +81,7 @@ func TestTableOnlyContainsLegalRunes(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			assert.Equal(t, test.out, twitter.OnlyContainsLegalRunes(test.in))
+			assert.Equal(t, test.out, twitter_old.OnlyContainsLegalRunes(test.in))
 		})
 	}
 }
@@ -98,7 +96,7 @@ func TestTableIsLongEnough(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			assert.Equal(t, test.out, twitter.IsLongEnough(test.in))
+			assert.Equal(t, test.out, twitter_old.IsLongEnough(test.in))
 		})
 	}
 }
@@ -116,8 +114,8 @@ func TestValidate(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.in, func(t *testing.T) {
-			twitter.Validate(test.in)
-			assert.Equal(t, test.out, twitter.Validate(test.in))
+			twitter_old.Validate(test.in)
+			assert.Equal(t, test.out, twitter_old.Validate(test.in))
 		})
 	}
 }

@@ -1,8 +1,8 @@
 package twitter_test
 
 import (
-	"github.com/GGYaX/namecheck"
-	twitter2 "github.com/GGYaX/namecheck/twitter-with-method"
+	"github.com/GGYaX/namecheck/namecheck"
+	twitter2 "github.com/GGYaX/namecheck/twitter"
 	"github.com/stretchr/testify/assert"
 	_ "os"
 	"testing"
