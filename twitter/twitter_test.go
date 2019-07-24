@@ -1,32 +1,102 @@
-package twitter
+package twitter_test
 
 import (
+	"github.com/GGYaX/namecheck/twitter"
+	"github.com/stretchr/testify/assert"
 	_ "os"
-	"regexp"
-	"unicode/utf8"
+	"testing"
 )
 
-var regexNoIllegalPattern = regexp.MustCompile("(?i)twitter")
-var onlyContainsLegalRunesRegex = regexp.MustCompile("^[A-Za-z0-9]+$")
-
-func IsShortEnough(s string) bool {
-	//runes := []rune(s)
-	//return len(runes) <= 15
-	return utf8.RuneCountInString(s) <= 15
+func TestIsShortEnough(t *testing.T) {
+	assert.Equal(t, true, twitter.IsShortEnough("qqqqqqqqqqqqqqq"))
+	assert.Equal(t, false, twitter.IsShortEnough("qqqqqqqqqqqqqqqq"))
+	assert.Equal(t, true, twitter.IsShortEnough("我我我我我我我我我我我我我😊我"))
+	assert.Equal(t, false, twitter.IsShortEnough("我我我我我我我我我我我我我😊我我"))
 }
 
-func IsLongEnough(s string) bool {
-	//runes := []rune(s)
-	//return len(runes) >= 1
-	return utf8.RuneCountInString(s) >= 1
+func TestContainsNoIllegalPattern(t *testing.T) {
+	assert.Equal(t, true, twitter.ContainsNoIllegalPattern("twitter"))
+	assert.Equal(t, true, twitter.ContainsNoIllegalPattern("atwitterb"))
+	assert.Equal(t, false, twitter.ContainsNoIllegalPattern("asdfadsf"))
 }
 
-func ContainsNoIllegalPattern(s string) (result bool) { // no (?i)twitter, using regex
-	result = regexNoIllegalPattern.MatchString(s)
-	return
+func TestOnlyContainsLegalRunes(t *testing.T) {
+	assert.Equal(t, true, twitter.OnlyContainsLegalRunes("qqqqqqqqqqqqqqq"))
+	assert.Equal(t, true, twitter.OnlyContainsLegalRunes("qqqqqqqqqqqqqqqq"))
+	assert.Equal(t, false, twitter.OnlyContainsLegalRunes("我我我我我我我我我我我我我😊我"))
 }
 
-func OnlyContainsLegalRunes(s string) (result bool) { // ^[0-9A-Z]
-	result = onlyContainsLegalRunesRegex.MatchString(s)
-	return
+func TestIsLongEnough(t *testing.T) {
+	assert.Equal(t, true, twitter.IsLongEnough("q"))
+	assert.Equal(t, false, twitter.IsLongEnough(""))
+}
+
+func BenchmarkIsLongEnough(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		twitter.IsLongEnough("asdf")
+	}
+}
+
+func TestTableIsShortEnough(t *testing.T) {
+	tests := []struct {
+		in  string
+		out bool
+	}{
+		{in: "qqqqqqqqqqqqqqq", out: true},
+		{in: "qqqqqqqqqqqqqqqq", out: false},
+		{in: "我我我我我我我我我我我我我😊我", out: true},
+		{in: "我我我我我我我我我我我我我😊我我", out: false},
+	}
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			assert.Equal(t, test.out, twitter.IsShortEnough(test.in))
+		})
+	}
+}
+
+func TestTableContainsNoIllegalPattern(t *testing.T) {
+	tests := []struct {
+		in  string
+		out bool
+	}{
+		{in: "twitter", out: true},
+		{in: "atwitterb", out: true},
+		{in: "asdfadsf", out: false},
+	}
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			assert.Equal(t, test.out, twitter.ContainsNoIllegalPattern(test.in))
+		})
+	}
+}
+
+func TestTableOnlyContainsLegalRunes(t *testing.T) {
+	tests := []struct {
+		in  string
+		out bool
+	}{
+		{in: "qqqqqqqqqqqqqqq", out: true},
+		{in: "qqqqqqqqqqqqqqqq", out: true},
+		{in: "我我我我我我我我我我我我我😊我", out: false},
+	}
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			assert.Equal(t, test.out, twitter.OnlyContainsLegalRunes(test.in))
+		})
+	}
+}
+
+func TestTableIsLongEnough(t *testing.T) {
+	tests := []struct {
+		in  string
+		out bool
+	}{
+		{in: "q", out: true},
+		{in: "", out: false},
+	}
+	for _, test := range tests {
+		t.Run(test.in, func(t *testing.T) {
+			assert.Equal(t, test.out, twitter.IsLongEnough(test.in))
+		})
+	}
 }
